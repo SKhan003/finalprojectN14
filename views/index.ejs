@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+  <title>whatsApp</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div id="main">
+    <nav>
+      <div class="navLeft">
+        <img src="/images/whatsapp icon.png" alt="">
+        <h3>whatsApp</h3>
+      </div>
+      <div class="navRight">
+        <i class="ri-subtract-fill"></i>
+        <i class="ri-aspect-ratio-line mini"></i>
+        <i class="ri-close-line"></i>
+      </div>
+    </nav>
+    <div id="searchMainBox">
+      <div id="searchUserBox">
+        <span class="close">&times;</span>
+        <form id="findUser" method="post" action="/findUser">
+          <input class="searchInputs newUsersearch"  type="text" placeholder="search" name="username">
+        <input id="newuserSubmitBtn" type="submit">
+        </form>
+      </div>
+    </div>
+    <center>
+      <div id="leftAll">
+        <div class="userAbout">
+          <i class="ri-chat-3-line"></i>
+          <i class="ri-phone-line"></i>
+          <i class="ri-focus-2-line"></i>
+        </div>
+        <div class="userAbout">
+          <i class="ri-settings-2-line"></i>
+          <div class="userProfile">
+            <img src="<%=user.pic%>" alt="">
+          </div>
+        </div>
+      </div>
+      <div id="centerMain">
+        <div id="userContact">
+          <div class="userContactNav">
+            <h2>Chats</h2>
+            <div id="chatsIcons">
+              <i id="myBtn" class="ri-pen-nib-line"></i>
+              <i class="ri-more-fill"></i>
+            </div>
+          </div>
+          <input class="searchInputs"  type="text" placeholder="Search or start a new chat">
+          <div id="archived">
+            <i class="ri-delete-bin-3-line"></i>
+            <h3>Archived</h3>
+          </div>
+          <div id="allChat">
+              <% user.personalUserChat.forEach(chat=>{ %>
+              <div class="personalchat" onclick="openChat('<%= chat.username%>','<%=chat.pic %>')">
+                <div class="personalProfile">
+                  <img src="<%= chat.pic %>" alt="">
+                </div>
+                <h3><%= chat.username %></h3>
+              </div>
+             <% }) %>
+              <!-- <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div>
+              <div class="personalchat"></div> -->
+          </div>
+        </div>
+        <div id="userChats">
+          
+        </div>
+      </div>
+    </center>
+  </div>
+
+  <script src="/javascripts/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js" integrity="sha512-Z6C1p1NIexPj5MsVUunW4pg7uMX6/TT3CUVldmjXx2kpip1eZcrAnxIusDxyFIikyM9A61zOVNgvLr/TGudOQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    var username = '<%user.username%>'
+    var socket = io();
+    socket.emit('newUserConnect',{
+      user:username
+    })
+    
+  </script>
+</body>
+</html>
