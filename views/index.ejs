@@ -24,7 +24,7 @@
       <div id="searchUserBox">
         <span class="close">&times;</span>
         <form id="findUser" method="post" action="/findUser">
-          <input class="searchInputs newUsersearch"  type="text" placeholder="search" name="username">
+          <input id="newUsersearch" class="searchInputs newUsersearch"  type="text" placeholder="search" name="username">
         <input id="newuserSubmitBtn" type="submit">
         </form>
       </div>
@@ -58,35 +58,43 @@
             <h3>Archived</h3>
           </div>
           <div id="allChat">
-              <% user.personalUserChat.forEach(chat=>{ %>
-              <div class="personalchat" onclick="openChat('<%= chat.username%>','<%=chat.pic %>')">
+              <% user.chats.forEach(chat=>{ %>
+              <div id="personalchat" class="personalchat" onclick="openChat('<%= chat.username%>','<%=chat.pic %>')">
                 <div class="personalProfile">
                   <img src="<%= chat.pic %>" alt="">
                 </div>
                 <h3><%= chat.username %></h3>
               </div>
              <% }) %>
-              <!-- <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div>
-              <div class="personalchat"></div> -->
           </div>
         </div>
         <div id="userChats">
-          
+          <div id="rightUserNav">
+            <div class="rightUserImage"></div>
+            <h2>dummy Username</h2>
+          </div>
+          <div id="usersConversation">
+          </div>
+          <div id="rightBottomInput">
+          <div class="sme">
+            <i class="ri-emotion-happy-line"></i>
+          </div>
+          <div class="sme">
+            <i class="ri-attachment-2"></i>
+          </div>
+          <textarea placeholder="Type a message"></textarea>
+          <div class="sendbtn sme">
+            <i class="ri-send-plane-line"></i></a>
+          </div>
+        </div>
         </div>
       </div>
     </center>
   </div>
 
   <script src="/javascripts/index.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js" integrity="sha512-Z6C1p1NIexPj5MsVUunW4pg7uMX6/TT3CUVldmjXx2kpip1eZcrAnxIusDxyFIikyM9A61zOVNgvLr/TGudOQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     var username = '<%user.username%>'
     var socket = io();

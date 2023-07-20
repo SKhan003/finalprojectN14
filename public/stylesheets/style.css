@@ -72,6 +72,7 @@ center{
   
 }
 i{
+  cursor: pointer;
   font-size: 18px;
   padding: 8px 8px;
   border-radius: 5px;
@@ -203,4 +204,64 @@ i:hover{
   background-color: rgb(30, 30, 30);
   color: #fff;
   display: none;
+  
+}
+#rightUserNav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 67vw;
+  padding: 0px 10px;
+  height: 10vh;
+  background-color: #282828;
+  border-bottom: solid 2px rgb(27, 27, 27);
+}
+.rightUserImage{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: rebeccapurple;
+}
+#usersConversation{
+  width: 67vw;
+  height: 75vh;
+  background-color: rgb(49, 49, 49);
+  border-bottom: solid 2px rgb(27, 27, 27);
+}
+#rightBottomInput textarea{
+  margin: 18px 20px;
+  width: 80%;
+   height: 30px;
+   color: #fff;
+   outline: none;
+   font-weight: 300;
+   resize: none;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+#rightBottomInput textarea::-webkit-scrollbar{
+  display: none;
+}
+#rightBottomInput{
+  display: flex;
+  width: 67vw;
+  height: 9vh;
+  background-color: #333;
+  color: #fff;
+}
+.sendbtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 60px;
+}
+.sme{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 50px;
+   height: 50px;  
+   margin: 4px 0px;
 }

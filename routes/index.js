@@ -26,6 +26,7 @@ router.get('/', isLoggedIn ,async function(req, res, next) {
   var currentUser = await users.findOne({
     username:req.user.username
   })
+  console.log(currentUser);
   res.render('index',{user:currentUser});
 });
 
@@ -77,7 +78,7 @@ router.post('/findUser',async (req,res,next)=>{
   if(findUser){
     res.status(200).json({
       isUserThere:true,
-      user:findUser
+      user:findUser,
     })
   }
   else{

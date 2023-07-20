@@ -16,13 +16,13 @@ closeSpan.onclick = function () {
 }
 
 
-var personalUserChat = document.querySelector(".personalchat");
+var personalChat = document.querySelector("#personalchat");
 var userRightChat = document.querySelector("#userChats");
 
 var currentOppositeUser = '';
 
 function addChat(username,image){
-  personalUserChat.innerHTML +=`<div onclick="openChat('${username}','${image}')" class="personalchat">
+  personalChat.innerHTML +=`<div onclick="openChat('${username}','${image}')" class="personalchat">
   <div class="personalProfile">
     <img src="${image}" alt="">
   </div>
@@ -48,7 +48,7 @@ async function openChat(username,image){
 
 searchNewUserBox.addEventListener('submit',async (event)=>{
   event.preventDefault();
-  var userDetail = document.querySelector(".newUsersearch");
+  var userDetail = document.querySelector("#newUsersearch");
   var responce = await axios.post('/findUser',{
     data:userDetail.value
   })
