@@ -24,8 +24,8 @@
       <div id="searchUserBox">
         <span class="close">&times;</span>
         <form id="findUser" method="post" action="/findUser">
-          <input id="newUsersearch" class="searchInputs newUsersearch"  type="text" placeholder="search" name="username">
-        <input id="newuserSubmitBtn" type="submit">
+          <input id="newUsersearch" class="searchInputs newUsersearch" type="text" placeholder="search" name="username">
+          <input id="newuserSubmitBtn" type="submit">
         </form>
       </div>
     </div>
@@ -52,41 +52,17 @@
               <i class="ri-more-fill"></i>
             </div>
           </div>
-          <input class="searchInputs"  type="text" placeholder="Search or start a new chat">
+          <input class="searchInputs" type="text" placeholder="Search or start a new chat">
           <div id="archived">
             <i class="ri-delete-bin-3-line"></i>
             <h3>Archived</h3>
           </div>
           <div id="allChat">
-              <% user.chats.forEach(chat=>{ %>
-              <div id="personalchat" class="personalchat" onclick="openChat('<%= chat.username%>','<%=chat.pic %>')">
-                <div class="personalProfile">
-                  <img src="<%= chat.pic %>" alt="">
-                </div>
-                <h3><%= chat.username %></h3>
-              </div>
-             <% }) %>
+
           </div>
         </div>
         <div id="userChats">
-          <div id="rightUserNav">
-            <div class="rightUserImage"></div>
-            <h2>dummy Username</h2>
-          </div>
-          <div id="usersConversation">
-          </div>
-          <div id="rightBottomInput">
-          <div class="sme">
-            <i class="ri-emotion-happy-line"></i>
-          </div>
-          <div class="sme">
-            <i class="ri-attachment-2"></i>
-          </div>
-          <textarea placeholder="Type a message"></textarea>
-          <div class="sendbtn sme">
-            <i class="ri-send-plane-line"></i></a>
-          </div>
-        </div>
+          
         </div>
       </div>
     </center>
@@ -94,14 +70,17 @@
 
   <script src="/javascripts/index.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     var username = '<%user.username%>'
     var socket = io();
-    socket.emit('newUserConnect',{
-      user:username
+    socket.emit('newUserConnect', {
+      user: username
     })
-    
+
   </script>
 </body>
+
 </html>
