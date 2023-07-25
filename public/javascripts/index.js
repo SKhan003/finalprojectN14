@@ -20,7 +20,7 @@ var userRightChat = document.querySelector("#userChats");
 var currentOppositeUser = "";
 
 function addChat(username, image) {
-  allChat.innerHTML += `<div id="personalchat" class="personalchat" onclick="openChat(${username},${image})">
+  allChat.innerHTML += `<div id="personalchat" onclick="openChat(${username},${image})" class="personalchat">
         <div class="personalProfile">
             <img src="${image}" alt="">
           </div>
@@ -51,13 +51,10 @@ function openChat(username,image) {
 
 searchNewUserBox.addEventListener("submit", async (event) => {
   event.preventDefault();
-  var userDetail = document.querySelector("#newUsersearch");
+  var userDetail = document.querySelector("#newUsersearch").value;
   var responce = await axios.post("/findUser", {
-    data: userDetail.value,
+    username:userDetail
   });
-  if (responce.data.isUserThere) {
-    addChat(responce.data.user.username, responce.data.user.pic);
-  } else {
-    alert("no user found");
-  }
+  var findUser = responce.data.user
+  addChat(findUser.username,findUser.pic)
 });

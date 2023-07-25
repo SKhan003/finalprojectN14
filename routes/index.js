@@ -71,19 +71,19 @@ function isLoggedIn(req,res,next){
   }
 }
 
-router.post('/findUser',async (req,res,next)=>{
+router.post('/findUser',isLoggedIn,async (req,res,next)=>{
+  var  findUsename = req.body.username
   var findUser = await users.findOne({
-    username:req.body.data
+    username:findUsename
   })
   if(findUser){
     res.status(200).json({
-      isUserThere:true,
       user:findUser,
     })
   }
   else{
-    res.status(200).json({
-      isUserThere:false
+    res.status(404).json({
+      message:'user not found'
     })
   }
 })
