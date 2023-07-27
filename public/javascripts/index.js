@@ -6,6 +6,8 @@ var closeSpan = document.querySelector(".close");
 
 var searchNewUserForm = document.querySelector("#findUser");
 
+var oppositeUser
+
 myBtn.addEventListener("click", function () {
   searchNewUserBox.style.display = "initial";
 });
@@ -20,7 +22,7 @@ var userRightChat = document.querySelector("#userChats");
 var currentOppositeUser = "";
 
 function addChat(username, image) {
-  allChat.innerHTML += `<div id="personalchat" onclick="openChat(${username},${image})" class="personalchat">
+  allChat.innerHTML += `<div id="personalchat" onclick="openChat('${username}','${image}')" class="personalchat">
         <div class="personalProfile">
             <img src="${image}" alt="">
           </div>
@@ -29,6 +31,7 @@ function addChat(username, image) {
 }
 
 function openChat(username,image) {
+  oppositeUser:username
   userRightChat.innerHTML = ` <div id="rightUserNav">
   <div class="rightUserImage"><img src="${image}" alt=""></div>
   <h2>${username}</h2>
@@ -52,9 +55,18 @@ function openChat(username,image) {
 searchNewUserBox.addEventListener("submit", async (event) => {
   event.preventDefault();
   var userDetail = document.querySelector("#newUsersearch").value;
-  var responce = await axios.post("/findUser", {
-    username:userDetail
-  });
+  try{
+    var responce = await axios.post("/findUser", {
+      username:userDetail,
+    });
+  }catch(err){
+    alert('user not found');
+  }
   var findUser = responce.data.user
-  addChat(findUser.username,findUser.pic)
+  if(findUser){
+    addChat(findUser.username,findUser.pic)
+    userDetail = ''
+    searchNewUserBox.style.display = 'none';
+  }
+  
 });

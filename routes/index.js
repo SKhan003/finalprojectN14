@@ -22,12 +22,12 @@ clearSockets();
 
 
 
-router.get('/', isLoggedIn ,async function(req, res, next) {
-  var currentUser = await users.findOne({
-    username:req.user.username
+router.get('/', isLoggedIn ,function(req, res, next) {
+  users.findOne({
+    username:req.session.passport.user
+  }).then(loggedInUser=>{
+    res.render('index',{user:loggedInUser});
   })
-  console.log(currentUser);
-  res.render('index',{user:currentUser});
 });
 
 router.get('/login',function(req,res,next){
