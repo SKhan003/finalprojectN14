@@ -45,7 +45,7 @@ function openChat(username,image) {
   <div class="sme">
     <i class="ri-attachment-2"></i>
   </div>
-  <textarea placeholder="Type a message"></textarea>
+  <input onchange="sendMessage(event)" placeholder="Type a message">
   <div class="sendbtn sme">
     <i class="ri-send-plane-line"></i></a>
   </div>
@@ -70,3 +70,16 @@ searchNewUserBox.addEventListener("submit", async (event) => {
   }
   
 });
+
+function sendMessage(){
+  var msg = event.target.value
+  var payLoad={
+    msg,
+    toUser:oppositeUser,
+    fromUser:username
+  }
+  socket.emit('msg',payLoad)
+  console.log(payLoad)
+  event.target.value = ''
+}
+

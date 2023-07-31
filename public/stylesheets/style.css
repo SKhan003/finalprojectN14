@@ -236,7 +236,7 @@ i:hover{
   background-color: rgb(49, 49, 49);
   border-bottom: solid 2px rgb(27, 27, 27);
 }
-#rightBottomInput textarea{
+#rightBottomInput input{
   margin: 18px 20px;
   width: 80%;
    height: 30px;
@@ -248,7 +248,7 @@ i:hover{
   outline: none;
   border: none;
 }
-#rightBottomInput textarea::-webkit-scrollbar{
+#rightBottomInput input::-webkit-scrollbar{
   display: none;
 }
 #rightBottomInput{
