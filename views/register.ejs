@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
+
 <body>
-    <form action="/register" method="post">
+    <!-- <form action="/register" method="post">
         <input type="text" name="username" placeholder="Enter Your Name">
         <input type="password" name="password" placeholder="Enter Your Password">
         <input type="text" name="pic" placeholder="Enter picture Link">
         <input type="submit">
-    </form>
+    </form> -->
+
+    <div id="main-login">
+        <!-- <form id="hidden" action="/uploads" method="post" enctype="multipart/form-data">
+            <input id="fileinp" type="file" name="filename" placeholder="Choose Photo">
+            <input id="fileSub" type="submit">
+        </form> -->
+        <div id="login-card">
+            <div id="profile-image">
+                <img src="../images/uploads/default.jpg" alt="">
+            </div>
+            <form action="/register" method="post">
+                <input type="text" name="username" placeholder="Enter Your Name">
+                <input type="password" name="password" placeholder="Enter Your Password">
+                <input type="email" name="email" placeholder="Enter Your Email">
+                <input style="cursor: pointer;" type="submit">
+            </form>
+            <a href="/login">Login Page</a>
+        </div>
+    </div>
+    <!-- <script>
+        // multer start 
+        var hiddenForm = document.querySelector("#hidden");
+        var inputFile = document.querySelector("#fileinp");
+        var inputSubmit = document.querySelector("#fileSub");
+        var profileImage = document.querySelector("#profile-image")
+
+        profileImage.addEventListener("click", function () {
+            inputFile.click();
+        })
+        inputFile.addEventListener("change",function(){
+            inputSubmit.click();
+        })
+
+// multer end
+    </script> -->
 </body>
+
 </html>

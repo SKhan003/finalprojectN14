@@ -9,6 +9,10 @@
 </head>
 <body>
   <div id="main">
+    <form id="hidden" action="/uploads" method="post" enctype="multipart/form-data">
+      <input id="fileinp" type="file" name="filename" placeholder="Choose Photo">
+      <input id="fileSub" type="submit">
+  </form>
     <nav>
       <div class="navLeft">
         <img src="/images/whatsapp icon.png" alt="">
@@ -17,7 +21,7 @@
       <div class="navRight">
         <i class="ri-subtract-fill"></i>
         <i class="ri-aspect-ratio-line mini"></i>
-        <i class="ri-close-line"></i>
+        <i id="closeWindow" onclick="closeTab()" class="ri-close-line"></i>
       </div>
     </nav>
     <div  id="searchMainBox">
@@ -29,7 +33,7 @@
         </form>
       </div>
     </div>
-    <center>
+    <div id="centerDiv">
       <div id="leftAll">
         <div class="userAbout">
           <i class="ri-chat-3-line"></i>
@@ -39,11 +43,12 @@
         <div class="userAbout">
           <i class="ri-settings-2-line"></i>
           <div class="userProfile">
-            <img src="<%=user.pic%>" alt="">
+            <img src="../images/uploads/<%=user.pic%>" alt="">
           </div>
         </div>
       </div>
       <div id="centerMain">
+       <center>
         <div id="userContact">
           <div class="userContactNav">
             <h2>Chats</h2>
@@ -60,11 +65,12 @@
           <div id="allChat">   
           </div>
         </div>
+       </center>
         <div id="userChats">
-
+          
         </div>
       </div>
-    </center>
+    </div>
   </div>
 
   <script src="/javascripts/index.js"></script>
@@ -79,9 +85,27 @@
        username
     })
     socket.on('msg',msg=>{
-      console.log(msg)
+      if(msg.newChat)
+      addChat(msg.fromUser,msg.fromUserPic)
     })
   </script>
+  <script>
+    // multer start 
+    var hiddenForm = document.querySelector("#hidden");
+    var inputFile = document.querySelector("#fileinp");
+    var inputSubmit = document.querySelector("#fileSub");
+    var profileImage = document.querySelector(".userProfile")
+
+    profileImage.addEventListener("click", function () {
+        inputFile.click();
+    })
+    inputFile.addEventListener("change",function(){
+        inputSubmit.click();
+    })
+
+    
+    // multer end
+</script>
   
 </body>
 

@@ -15,7 +15,11 @@ var userSchema = mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'user'
   }],
-  currentSocket:String
+  currentSocket:String,
+  pic:{
+    type:String,
+    default:"default.jpg" 
+  }
 
 })
 

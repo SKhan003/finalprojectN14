@@ -3,8 +3,38 @@ var router = express.Router();
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const mongoose = require('mongoose');
-const users = require('./users');
+const users = require('./users.js');
+const msgModel = require('./msg.js');
+const multer = require("multer");
 passport.use(new localStrategy(users.authenticate()))
+
+
+// multer initializing 
+
+function fileFilter (req, file, cb) {
+  if(file.mimetype==="image/png" || file.mimetype ==="image/jpg" || file.mimetype === "image/jpeg"){
+    cb(null, true)                                            
+  } 
+  else{
+    cb(new Error('I don\'t have a clue!'))
+  }
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/uploads')
+  },
+  filename: function (req, file, cb) {
+    var dt = new Date();
+    var fn = Math.floor(Math.random()*10000000) + dt.getTime() + file.originalname;
+    cb(null,fn)
+  } 
+})
+
+const upload = multer({ storage: storage , fileFilter : fileFilter})
+
+
+// multer ending 
 
 
 async function clearSockets(){
@@ -18,10 +48,9 @@ async function clearSockets(){
 }
 clearSockets();
 
+
+
 /* GET home page. */
-
-
-
 router.get('/', isLoggedIn ,function(req, res, next) {
   users.findOne({
     username:req.session.passport.user
@@ -38,7 +67,9 @@ router.get('/login',function(req,res,next){
 router.post('/register',function(req,res,next){
   var newUser = {
     username:req.body.username,
-    pic:req.body.pic
+    pic:req.body.pic,
+    email:req.body.email
+    
   };
   users.register(newUser,req.body.password)
   .then(function(user){
@@ -59,7 +90,16 @@ router.get('/register', (req, res, next) => {
 router.post('/login',passport.authenticate('local',{
   successRedirect:'/',
   failureRedirect:'/login'
-}),function(req,res,next){});
+}),function(req,res,next) {});
+
+
+router.post('/uploads',isLoggedIn,upload.single('filename'),(res,req)=>{
+  users.findOne({username:req.session.passport.user})
+  .then(function(loggedUser){
+    loggedUser.pic = req.file.filename;
+    loggedUser.save();
+  })
+})
 
 
 function isLoggedIn(req,res,next){
@@ -86,6 +126,24 @@ router.post('/findUser',isLoggedIn,async (req,res,next)=>{
       message:'user not found'
     })
   }
+})
+
+router.post('/findChats',isLoggedIn ,async(res,req,next)=>{
+  var oppositeUser = await users.findOne({
+    username:req.body.oppositeUser
+  })
+
+  var chats = await msgModel.find({
+    $or:[{
+      toUser:req.username,
+      fromUser:oppositeUser.username
+    },{
+      toUser:oppositeUser.username,
+      fromUser:req.user.username
+    }]
+  })
+  console.log(chats)
+
 })
 
 

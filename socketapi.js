@@ -1,5 +1,6 @@
 const io = require( "socket.io" )();
-const users = require('./routes/users')
+const users = require('./routes/users.js')
+const msgModel = require('./routes/msg.js');
 const socketapi = {
     io: io
 };
@@ -16,21 +17,39 @@ io.on( "connection", function( socket ) {
     })  
     socket.on('newmsg',async msg=>{
         var toUser = await  users.findOne({
-            username:users.toUser
+            username:msg.toUser
         })
         var fromUser = await users.findOne({
             username:msg.fromUser
         })
+        var indexOfFromUser = toUser.chats.indexOf(fromUser._id);
+        if(indexOfFromUser == -1){
+            toUser.chats.push(fromUser._id)
+            fromUser.chats.push(toUser._id)
+            await toUser.save()
+            await fromUser.save()
+            msg.newChat = true
+        }
+        
         msg.fromUserPic = fromUser.pic
-        socket.to(toUser.currentSocket).emit('msg',msg)
-        console.log(toUser)
+
+        var newMsg = await msgModel.create({
+            data:msg.msg,
+            toUser:toUser.username,
+            fromUser:fromUser.username
+        })
+        if(toUser.currentSocket){
+            socket.to(toUser.currentSocket).emit('msg',msg)
+        }
     })
     socket.on('disconnect',async()=>{
-        var disconnectedUser = await users.findOne({
+        await users.findOneAndUpdate({
             currentSocket:socket.id
+        },{
+            currentSocket:''
+
         })
-        disconnectedUser.currentSocket = ''
-        await disconnectedUser.save();
+        
     })
 });
 // end of socket.io logic
